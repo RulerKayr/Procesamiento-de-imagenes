@@ -11,6 +11,11 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
+@app.route('/google07bf63060c93272a.html')
+def google_verification():
+    return render_template('google07bf63060c93272a.html')
+
+
 @app.route('/upload', methods=['POST'])
 def upload_image():
     file = request.files['image']
