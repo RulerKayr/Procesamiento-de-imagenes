@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor de Imágenes Avanzado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Editor de Imágenes Avanzado</h1>
+
+    <input type="file" id="imageUpload" accept="image/*"><br>
+    <img id="preview" alt="Previsualización" />
+
+    <label for="effect">Efecto:</label>
+    <select id="effect">
+        <option value="grayscale">Escala de grises</option>
+        <option value="canny">Canny (bordes)</option>
+        <option value="contours">Contornos</option>
+        <option value="blur">Desenfoque</option>
+        <option value="brightness">Brillo</option>
+        <option value="sketch">Lápiz</option>
+        <option value="invert">Invertido</option>
+        <option value="sepia">Sepia</option>
+        <option value="cartoon">Cartoon</option>
+        <option value="colormap">Mapa térmico</option>
+        <option value="face">Detección de rostros</option>
+    </select>
+
+    <div id="brightness-control" class="control-group hidden">
+        <label for="brightness">Brillo:</label>
+        <input type="range" id="brightness" min="-100" max="100" value="0">
+    </div>
+
+    <div id="blur-control" class="control-group hidden">
+        <label for="blur">Desenfoque (kernel):</label>
+        <input type="range" id="blur" min="1" max="51" step="2" value="15">
+    </div>
+
+    <label for="format">Formato:</label>
+    <select id="format">
+        <option value="jpg">JPG</option>
+        <option value="png">PNG</option>
+        <option value="svg">SVG</option>
+    </select>
+
+    <button id="processImage">Procesar Imagen</button>
+
+    <h2>Resultado</h2>
+    <img id="processedImage" alt="Imagen procesada" />
+
+    <!-- Botón de descarga -->
+    <a id="downloadBtn" style="display:none;" download="imagen_procesada.jpg" class="download-button">Descargar imagen</a>
+</div>
+
+<script>
+const fileInput = document.getElementById('imageUpload');
+const preview = document.getElementById('preview');
+const effectSelect = document.getElementById('effect');
+const downloadBtn = document.getElementById('downloadBtn');
+
+fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (file) preview.src = URL.createObjectURL(file);
+});
+
+effectSelect.addEventListener('change', () => {
+    document.getElementById('brightness-control').classList.toggle('hidden', effectSelect.value !== 'brightness');
+    document.getElementById('blur-control').classList.toggle('hidden', effectSelect.value !== 'blur');
+});
+
+document.getElementById('processImage').addEventListener('click', () => {
+    const formData = new FormData();
+    formData.append('image', fileInput.files[0]);
+    formData.append('effect', effectSelect.value);
+    const format = document.getElementById('format').value;
+    formData.append('format', format);
+    formData.append('brightness', document.getElementById('brightness').value);
+    formData.append('blur', document.getElementById('blur').value);
+
+    fetch('/upload', { method: 'POST', body: formData })
+        .then(res => res.blob())
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            document.getElementById('processedImage').src = url;
+            downloadBtn.href = url;
+            downloadBtn.download = `imagen_procesada.${format}`;
+            downloadBtn.style.display = 'inline-block';
+        });
+});
+</script>
+</body>
+</html>
