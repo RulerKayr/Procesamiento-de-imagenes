@@ -4,3 +4,4 @@ numpy
 Pillow
 svgwrite
 gunicorn
+requests
