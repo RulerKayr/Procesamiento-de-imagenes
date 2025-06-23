@@ -1,8 +1,6 @@
-Flask
-opencv-python
+flask
+opencv-python-headless
+pytesseract
+gunicorn
 numpy
 Pillow
-svgwrite
-gunicorn
-requests
-pytesseract
