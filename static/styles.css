@@ -1,187 +1,215 @@
-/* === Estilos generales === */
+/* Estilos generales para el cuerpo del documento */
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to right, #ece9e6, #ffffff);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Segoe UI', sans-serif; /* Fuente principal */
+    background: linear-gradient(to right, #ece9e6, #ffffff); /* Fondo con gradiente */
+    margin: 0; /* Sin márgenes */
+    padding: 0; /* Sin relleno */
+    display: flex; /* Usa flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: start; /* Alinea al inicio verticalmente */
+    min-height: 100vh; /* Altura mínima de viewport */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
 }
 
-.container {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    margin: 20px;
-    text-align: center;
-    max-width: 1000px;
-    width: 100%;
-    transition: background-color 0.3s ease, color 0.3s ease;
+/* Contenedor principal */
+.contenedor {
+    background-color: #fff; /* Fondo blanco */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra */
+    padding: 40px; /* Relleno interno */
+    margin: 20px; /* Margen externo */
+    text-align: center; /* Alineación de texto centrada */
+    max-width: 1000px; /* Ancho máximo */
+    width: 100%; /* Ancho completo */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
 }
 
-h1 {
-    color: #333;
+/* Pantalla de introducción */
+#introduccion {
+    position: fixed; /* Posición fija */
+    top: 0; left: 0; /* Posicionado en esquina superior izquierda */
+    width: 100%; height: 100%; /* Tamaño completo */
+    background: #0c19db; /* Fondo verde */
+    color: white; /* Texto blanco */
+    display: flex; /* Usa flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    font-size: 2em; /* Tamaño de fuente grande */
+    z-index: 9999; /* Capa superior */
+    animation: desvanecer 1s ease 1s forwards; /* Animación de desvanecimiento */
 }
 
-h2 {
-    margin-top: 30px;
-    color: #444;
+/* Animación de desvanecimiento */
+@keyframes desvanecer {
+    to {
+        opacity: 0; /* Hace transparente */
+        visibility: hidden; /* Oculta el elemento */
+    }
 }
 
-h3 {
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #555;
-}
+/* Estilos de títulos */
+h1 { color: #333; } /* Color oscuro para h1 */
+h2 { margin-top: 30px; color: #444; } /* Margen superior y color para h2 */
+h3 { margin-bottom: 10px; font-size: 16px; color: #555; } /* Estilos para h3 */
 
+/* Estilos para formularios */
 label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-    color: #555;
+    display: block; /* Mostrar como bloque */
+    margin-top: 15px; /* Margen superior */
+    font-weight: bold; /* Texto en negrita */
+    color: #555; /* Color de texto */
 }
 
-/* === Inputs === */
+/* Estilos para controles de formulario */
 select,
 input[type="file"],
 input[type="range"],
 input[type="text"] {
-    margin: 10px 0;
-    padding: 10px;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 10px 0; /* Margen vertical */
+    padding: 10px; /* Relleno interno */
+    width: 100%; /* Ancho completo */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 8px; /* Bordes redondeados */
+    background-color: #f9f9f9; /* Color de fondo */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
 }
 
-input[type="range"] {
-    accent-color: #4CAF50;
+/* Estilo específico para input range */
+input[type="range"] { accent-color: #4CAF50; } /* Color del control deslizante */
+
+/* Grupo de controles */
+.grupo-control {
+    margin-top: 10px; /* Margen superior */
+    text-align: left; /* Alineación de texto a la izquierda */
 }
 
-.control-group {
-    margin-top: 10px;
-    text-align: left;
+/* Estilos para labels dentro de grupos */
+.grupo-control label {
+    font-size: 14px; /* Tamaño de fuente */
+    color: #444; /* Color de texto */
 }
 
-.control-group label {
-    font-size: 14px;
-    color: #444;
-}
-
-/* === Botones === */
+/* Estilos para botones */
 button {
-    margin: 10px 5px;
-    padding: 12px 20px;
-    font-size: 15px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin: 10px 5px; /* Margen */
+    padding: 12px 20px; /* Relleno */
+    font-size: 15px; /* Tamaño de fuente */
+    background-color: #4CAF50; /* Fondo verde */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor tipo puntero */
+    transition: background-color 0.3s ease; /* Transición suave */
 }
 
-button:hover {
-    background-color: #45a049;
-}
+/* Efecto hover para botones */
+button:hover { background-color: #45a049; } /* Color más oscuro al pasar mouse */
 
-#toggleDark {
-    background-color: #333;
-}
+/* Botón específico para modo oscuro */
+#alternarOscuro { background-color: #333; } /* Fondo oscuro */
+#alternarOscuro:hover { background-color: #222; } /* Fondo más oscuro al pasar mouse */
 
-#toggleDark:hover {
-    background-color: #222;
-}
-
-/* === Imagenes === */
+/* Estilos para imágenes */
 img {
-    max-width: 100%;
-    max-height: 400px;
-    object-fit: contain;
-    border-radius: 10px;
-    border: 1px solid #ccc;
+    max-width: 100%; /* Ancho máximo */
+    max-height: 400px; /* Altura máxima */
+    object-fit: contain; /* Ajuste de imagen */
+    border-radius: 10px; /* Bordes redondeados */
+    border: 1px solid #ccc; /* Borde */
 }
 
-/* Comparación lado a lado */
-.image-compare {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: start;
-    flex-wrap: wrap;
-    margin-top: 15px;
+/* Contenedor para comparar imágenes */
+.comparador-imagenes {
+    display: flex; /* Usa flexbox */
+    gap: 20px; /* Espacio entre elementos */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: start; /* Alinea al inicio verticalmente */
+    flex-wrap: wrap; /* Permite que se envuelvan */
+    margin-top: 15px; /* Margen superior */
 }
 
-.image-compare div {
-    flex: 1 1 45%;
-    text-align: center;
+/* Estilos para divisiones dentro del comparador */
+.comparador-imagenes div {
+    flex: 1 1 45%; /* Flexibilidad del elemento */
+    text-align: center; /* Texto centrado */
 }
 
-/* === Botón de descarga === */
-#downloadBtn {
-    display: none;
-    text-decoration: none;
-    background-color: #2196F3;
+/* Estilos para botón de descarga */
+#botonDescarga {
+    display: none; /* Oculto por defecto */
+    text-decoration: none; /* Sin decoración de texto */
+    background-color: #2196F3; /* Fondo azul */
+    color: white; /* Texto blanco */
+    padding: 10px 20px; /* Relleno */
+    border-radius: 8px; /* Bordes redondeados */
+    margin-top: 20px; /* Margen superior */
+    font-weight: bold; /* Texto en negrita */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover para botón de descarga */
+#botonDescarga:hover { background-color: #1976D2; } /* Color más oscuro al pasar mouse */
+
+/* Clase utilitaria para ocultar elementos */
+.oculto { display: none; }
+
+/* Estilos para modo oscuro */
+body.oscuro {
+    background: #1e1e1e; /* Fondo oscuro */
+    color: #eee; /* Texto claro */
+}
+
+/* Contenedor en modo oscuro */
+body.oscuro .contenedor {
+    background-color: #2c2c2c; /* Fondo más oscuro */
+}
+
+/* Textos en modo oscuro */
+body.oscuro label,
+body.oscuro h1,
+body.oscuro h2,
+body.oscuro h3 {
+    color: #ddd; /* Color de texto claro */
+}
+
+/* Controles de formulario en modo oscuro */
+body.oscuro select,
+body.oscuro input[type="file"],
+body.oscuro input[type="range"],
+body.oscuro input[type="text"] {
+    background-color: #333; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    border: 1px solid #555; /* Borde más visible */
+}
+
+.boton-descarga-mat {
+    display: inline-block;
+    background-color: #9C27B0;
     color: white;
     padding: 10px 20px;
-    border-radius: 8px;
-    margin-top: 20px;
+    text-decoration: none;
     font-weight: bold;
+    border-radius: 8px;
+    margin-top: 10px;
     transition: background-color 0.3s ease;
 }
-
-#downloadBtn:hover {
-    background-color: #1976D2;
+.boton-descarga-mat:hover {
+    background-color: #7B1FA2;
+}
+body.oscuro .boton-descarga-mat {
+    background-color: #BA68C8;
+    color: black;
 }
 
-/* === Clases auxiliares === */
-.hidden {
-    display: none;
-}
 
-/* === Modo oscuro === */
-body.dark {
-    background: #1e1e1e;
-    color: #eee;
-}
 
-body.dark .container {
-    background-color: #2c2c2c;
-}
 
-body.dark label,
-body.dark h1,
-body.dark h2,
-body.dark h3 {
-    color: #ddd;
-}
 
-body.dark select,
-body.dark input[type="file"],
-body.dark input[type="range"],
-body.dark input[type="text"] {
-    background-color: #333;
-    color: #fff;
-    border: 1px solid #555;
-}
 
-body.dark button {
-    background-color: #388E3C;
-}
+/* Botones en modo oscuro */
+body.oscuro button { background-color: #388E3C; } /* Verde más oscuro */
+body.oscuro button:hover { background-color: #2E7D32; } /* Verde aún más oscuro al pasar mouse */
+body.oscuro #botonDescarga { background-color: #1565C0; } /* Azul más oscuro */
+body.oscuro #botonDescarga:hover { background-color: #0D47A1; } /* Azul aún más oscuro al pasar mouse */
 
-body.dark button:hover {
-    background-color: #2E7D32;
-}
 
-body.dark #downloadBtn {
-    background-color: #1565C0;
-}
-
-body.dark #downloadBtn:hover {
-    background-color: #0D47A1;
-}

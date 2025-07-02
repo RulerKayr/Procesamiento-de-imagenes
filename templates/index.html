@@ -6,162 +6,176 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-<div class="container">
+<div class="contenedor">
     <h1>Editor de Imágenes Avanzado</h1>
+    <div id="introduccion">Procesa tu imagen gratis acá</div>
 
-    <!-- Subir imagen -->
-    <section class="section">
-        <label for="imageUpload">📤 Subir imagen:</label>
-        <input type="file" id="imageUpload" accept="image/*"><br>
-        <div class="image-compare">
+    <section class="seccion">
+        <label for="subirImagen">📤 Subir imagen:</label>
+        <input type="file" id="subirImagen" accept="image/*"><br>
+        <div class="comparador-imagenes">
             <div>
                 <h3>🖼 Imagen original</h3>
-                <img id="preview" alt="Previsualización original" />
+                <img id="vistaPrevia" alt="Previsualización original" />
             </div>
             <div>
                 <h3>🧪 Imagen procesada</h3>
-                <img id="processedImage" alt="Imagen procesada" />
+                <img id="imagenProcesada" alt="Imagen procesada" />
             </div>
         </div>
     </section>
 
-    <!-- Filtros manuales -->
-    <section class="section">
+    <section class="seccion">
         <h2>🛠 Ajustes Manuales</h2>
-        <select id="manualEffect">
-            <option value="none">Sin efecto</option>
-            <option value="grayscale">Escala de grises</option>
-            <option value="invert">Invertido</option>
-            <option value="brightness">Brillo</option>
-            <option value="blur">Desenfoque</option>
+        <select id="efectoManual">
+            <option value="ninguno">Sin efecto</option>
+            <option value="escala_grises">Escala de grises</option>
+            <option value="invertir">Invertido</option>
+            <option value="brillo">Brillo</option>
+            <option value="desenfoque">Desenfoque</option>
             <option value="canny">Detección de bordes (Canny)</option>
             <option value="sepia">Sepia</option>
-            <option value="cartoon">Cartoon</option>
+            <option value="caricatura">Caricatura</option>
         </select>
 
-        <div id="brightness-control" class="control-group hidden">
-            <label for="brightness">Brillo:</label>
-            <input type="range" id="brightness" min="-100" max="100" value="0">
+        <div id="control-brillo" class="grupo-control oculto">
+            <label for="brillo">Brillo:</label>
+            <input type="range" id="brillo" min="-100" max="100" value="0">
         </div>
 
-        <div id="blur-control" class="control-group hidden">
-            <label for="blur">Desenfoque:</label>
-            <input type="range" id="blur" min="1" max="51" step="2" value="15">
+        <div id="control-desenfoque" class="grupo-control oculto">
+            <label for="desenfoque">Desenfoque:</label>
+            <input type="range" id="desenfoque" min="1" max="51" step="2" value="15">
         </div>
     </section>
 
-    <!-- Herramientas inteligentes -->
-    <section class="section">
+    <section class="seccion">
         <h2>🧠 Herramientas Inteligentes</h2>
-        <label><input type="checkbox" id="faceBlur"> Desenfoque de rostros</label><br>
+        <label><input type="checkbox" id="desenfoqueRostros"> Desenfoque de rostros</label><br>
+        <div id="opcionesDesenfoqueRostro" class="grupo-control oculto">
+            <label for="tipoDesenfoqueRostro">Tipo de desenfoque de rostro:</label>
+            <select id="tipoDesenfoqueRostro">
+                <option value="gaussian">Difuminado Gaussiano</option>
+                <option value="pixelar">Pixelado</option>
+                <option value="media">Desenfoque de Media</option>
+                <option value="bilateral">Filtro Bilateral</option>
+            </select>
+        </div>
         <label><input type="checkbox" id="ocr"> Extraer texto (OCR)</label><br>
-        <label><input type="checkbox" id="contours"> Detectar contornos</label>
+        <label><input type="checkbox" id="contornos"> Detectar contornos</label>
     </section>
 
-    <!-- Utilidades -->
-    <section class="section">
+    <section class="seccion">
         <h2>🖋 Utilidades</h2>
-        <label for="watermark">Marca de agua (texto):</label>
-        <input type="text" id="watermark" placeholder="Ej. MiMarca"><br>
-        <label><input type="checkbox" id="compress"> Comprimir imagen</label>
+        <label for="marcaAgua">Marca de agua (texto):</label>
+        <input type="text" id="marcaAgua" placeholder="Ej. MiMarca"><br>
+        <label><input type="checkbox" id="comprimir"> Comprimir imagen</label>
     </section>
 
-    <!-- Controles -->
-    <section class="section">
+    <section class="seccion">
         <h2>⚙️ Procesar</h2>
-        <label for="format">Formato de salida:</label>
-        <select id="format">
+        <label for="formato">Formato de salida:</label>
+        <select id="formato">
             <option value="jpg">JPG</option>
             <option value="png">PNG</option>
             <option value="svg">SVG</option>
         </select>
 
-        <button id="processImage">Procesar Imagen</button>
-        <button id="resetImage">Restablecer Imagen</button>
-        <button id="toggleDark">Modo Oscuro</button>
+        <button id="procesarImagen">Procesar Imagen</button>
+        <button id="reiniciarImagen">Restablecer Imagen</button>
+        <button id="alternarOscuro">Modo Oscuro</button>
     </section>
 
-    <!-- Descarga y texto OCR -->
-    <section class="section">
-        <a id="downloadBtn" style="display:none;" download="imagen_procesada.jpg" class="download-button">Descargar imagen</a>
+    <section class="seccion">
+        <a id="botonDescarga" style="display:none;" download="imagen_procesada.jpg" class="boton-descarga">Descargar imagen</a>
         <h2>📄 Texto extraído</h2>
-        <pre id="ocrText" style="white-space: pre-wrap;"></pre>
+        <pre id="textoOcr" style="white-space: pre-wrap;"></pre>
+    </section>
+    <section class="seccion">
+        <a href="{{ url_for('static', filename='Codigos.m') }}" download class="boton-descarga-mat">⬇️ Descargar archivo .mat</a>
     </section>
 </div>
 
 <script>
-const fileInput = document.getElementById('imageUpload');
-const preview = document.getElementById('preview');
-const processedImage = document.getElementById('processedImage');
-const downloadBtn = document.getElementById('downloadBtn');
-const brightnessControl = document.getElementById('brightness-control');
-const blurControl = document.getElementById('blur-control');
-const manualEffect = document.getElementById('manualEffect');
-const ocrText = document.getElementById('ocrText');
-let originalImageFile = null;
+const subirImagen = document.getElementById('subirImagen');
+const vistaPrevia = document.getElementById('vistaPrevia');
+const imagenProcesada = document.getElementById('imagenProcesada');
+const botonDescarga = document.getElementById('botonDescarga');
+const controlBrillo = document.getElementById('control-brillo');
+const controlDesenfoque = document.getElementById('control-desenfoque');
+const efectoManual = document.getElementById('efectoManual');
+const textoOcr = document.getElementById('textoOcr');
+const desenfoqueRostros = document.getElementById('desenfoqueRostros');
+const opcionesDesenfoqueRostro = document.getElementById('opcionesDesenfoqueRostro');
+let archivoImagenOriginal = null;
 
-fileInput.addEventListener('change', () => {
-    const file = fileInput.files[0];
-    if (file) {
-        originalImageFile = file;
-        preview.src = URL.createObjectURL(file);
+subirImagen.addEventListener('change', () => {
+    const archivo = subirImagen.files[0];
+    if (archivo) {
+        archivoImagenOriginal = archivo;
+        vistaPrevia.src = URL.createObjectURL(archivo);
     }
 });
 
-manualEffect.addEventListener('change', () => {
-    brightnessControl.classList.toggle('hidden', manualEffect.value !== 'brightness');
-    blurControl.classList.toggle('hidden', manualEffect.value !== 'blur');
+efectoManual.addEventListener('change', () => {
+    controlBrillo.classList.toggle('oculto', efectoManual.value !== 'brillo');
+    controlDesenfoque.classList.toggle('oculto', efectoManual.value !== 'desenfoque');
 });
 
-document.getElementById('processImage').addEventListener('click', () => {
-    const formData = new FormData();
-    const selectedFile = originalImageFile;
-    if (!selectedFile) return;
+desenfoqueRostros.addEventListener('change', () => {
+    opcionesDesenfoqueRostro.classList.toggle('oculto', !desenfoqueRostros.checked);
+});
 
-    formData.append('image', selectedFile);
-    formData.append('manualEffect', document.getElementById('manualEffect').value);
-    formData.append('format', document.getElementById('format').value);
-    formData.append('brightness', document.getElementById('brightness').value);
-    formData.append('blur', document.getElementById('blur').value);
-    formData.append('watermark', document.getElementById('watermark').value);
-    formData.append('compress', document.getElementById('compress').checked);
-    formData.append('ocr', document.getElementById('ocr').checked);
-    formData.append('faceBlur', document.getElementById('faceBlur').checked);
-    formData.append('contours', document.getElementById('contours').checked);
+document.getElementById('procesarImagen').addEventListener('click', () => {
+    const datosFormulario = new FormData();
+    const archivoSeleccionado = archivoImagenOriginal;
+    if (!archivoSeleccionado) return;
 
-    fetch('/upload', { method: 'POST', body: formData })
-        .then(res => {
-            const contentType = res.headers.get("Content-Type");
-            if (contentType && contentType.includes("text/plain")) {
-                return res.text().then(text => {
-                    ocrText.textContent = text;
-                    processedImage.style.display = 'none';
-                    downloadBtn.style.display = 'none';
+    datosFormulario.append('imagen', archivoSeleccionado);
+    datosFormulario.append('efectoManual', document.getElementById('efectoManual').value);
+    datosFormulario.append('formato', document.getElementById('formato').value);
+    datosFormulario.append('brillo', document.getElementById('brillo').value);
+    datosFormulario.append('desenfoque', document.getElementById('desenfoque').value);
+    datosFormulario.append('marcaAgua', document.getElementById('marcaAgua').value);
+    datosFormulario.append('comprimir', document.getElementById('comprimir').checked);
+    datosFormulario.append('ocr', document.getElementById('ocr').checked);
+    datosFormulario.append('desenfoqueRostros', document.getElementById('desenfoqueRostros').checked);
+    datosFormulario.append('contornos', document.getElementById('contornos').checked);
+    datosFormulario.append('tipoDesenfoqueRostro', document.getElementById('tipoDesenfoqueRostro').value);
+
+    fetch('/subir', { method: 'POST', body: datosFormulario })
+        .then(respuesta => {
+            const tipoContenido = respuesta.headers.get("Content-Type");
+            if (tipoContenido && tipoContenido.includes("text/plain")) {
+                return respuesta.text().then(texto => {
+                    textoOcr.textContent = texto;
+                    imagenProcesada.style.display = 'none';
+                    botonDescarga.style.display = 'none';
                 });
             } else {
-                return res.blob().then(blob => {
+                return respuesta.blob().then(blob => {
                     const url = URL.createObjectURL(blob);
-                    processedImage.src = url;
-                    processedImage.style.display = 'block';
-                    downloadBtn.href = url;
-                    const format = document.getElementById('format').value;
-                    downloadBtn.download = `imagen_procesada.${format}`;
-                    downloadBtn.style.display = 'inline-block';
-                    ocrText.textContent = '';
+                    imagenProcesada.src = url;
+                    imagenProcesada.style.display = 'block';
+                    botonDescarga.href = url;
+                    const formato = document.getElementById('formato').value;
+                    botonDescarga.download = `imagen_procesada.${formato}`;
+                    botonDescarga.style.display = 'inline-block';
+                    textoOcr.textContent = '';
                 });
             }
         });
 });
 
-document.getElementById('resetImage').addEventListener('click', () => {
-    if (originalImageFile) preview.src = URL.createObjectURL(originalImageFile);
-    processedImage.src = '';
-    downloadBtn.style.display = 'none';
-    ocrText.textContent = '';
+document.getElementById('reiniciarImagen').addEventListener('click', () => {
+    if (archivoImagenOriginal) vistaPrevia.src = URL.createObjectURL(archivoImagenOriginal);
+    imagenProcesada.src = '';
+    botonDescarga.style.display = 'none';
+    textoOcr.textContent = '';
 });
 
-document.getElementById('toggleDark').addEventListener('click', () => {
-    document.body.classList.toggle('dark');
+document.getElementById('alternarOscuro').addEventListener('click', () => {
+    document.body.classList.toggle('oscuro');
 });
 </script>
 </body>
